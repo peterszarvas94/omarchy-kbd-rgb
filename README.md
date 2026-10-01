@@ -8,6 +8,7 @@ A small Go command reads `~/.local/state/omarchy/current/theme/colors.toml` and 
 
 - Linux with Omarchy and systemd user services.
 - Go 1.27 or newer to build; no external Go dependencies.
+- `curl` and `tar` for the installer.
 - A Corne with USB vendor/product ID `4653:0004`, Vial firmware, and VialRGB support. These IDs are currently hardcoded in `main.go`; this is not a generic VIA keyboard tool.
 - Read/write access to the keyboard's `/dev/hidraw*` interface through your existing device permissions.
 
@@ -16,12 +17,10 @@ The original setup was tested with a Corne v4 running VIA protocol 9 and VialRGB
 ## Install
 
 ```sh
-git clone https://github.com/peterszarvas94/omarchy-kbd-rgb.git
-cd omarchy-kbd-rgb
-./install.sh
+curl -fsSL https://raw.githubusercontent.com/peterszarvas94/omarchy-kbd-rgb/master/install.sh | sh
 ```
 
-This builds and installs `~/.local/bin/kbd-rgb`, installs the two units under `~/.config/systemd/user/`, enables the watcher at login, and applies the current accent. Installing replaces existing files at those three locations. If the keyboard is disconnected or inaccessible, the final color application fails; the watcher remains installed.
+Run as your normal user, without `sudo`. The installer downloads the source into a temporary directory, builds it using Go, installs `~/.local/bin/kbd-rgb` and the two units under `~/.config/systemd/user/`, enables the watcher at login, and applies the current accent. Installing replaces existing files at those three locations. If the keyboard is disconnected or inaccessible, the final color application fails; the watcher remains installed. Run the same command again to update.
 
 If you previously installed a theme hook that runs `kbd-rgb`, remove that hook to avoid duplicate updates. The watcher handles both normal theme changes and Neon Glow palette changes.
 
@@ -77,14 +76,10 @@ journalctl --user -u kbd-rgb.service
 ## Uninstall
 
 ```sh
-systemctl --user disable --now kbd-rgb.path
-systemctl --user stop kbd-rgb.service
-rm ~/.config/systemd/user/kbd-rgb.path ~/.config/systemd/user/kbd-rgb.service
-rm ~/.local/bin/kbd-rgb
-systemctl --user daemon-reload
+curl -fsSL https://raw.githubusercontent.com/peterszarvas94/omarchy-kbd-rgb/master/uninstall.sh | sh
 ```
 
-The last saved color remains on the keyboard.
+Run as your normal user, without `sudo`. This disables the watcher and removes the installed binary and systemd units. The last saved color remains on the keyboard.
 
 ## License
 
