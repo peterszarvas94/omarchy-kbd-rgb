@@ -14,7 +14,9 @@ A small Go command reads `~/.local/state/omarchy/current/theme/colors.toml` and 
 
 The original setup was tested with a Corne v4 running VIA protocol 9 and VialRGB, on both keyboard halves. Its firmware reported a maximum brightness of 50. Other firmware and devices have not been verified.
 
-## Install or update
+## Install
+
+### 1. Automatic install (sh)
 
 With Go, `curl`, and `tar` installed, run:
 
@@ -26,23 +28,14 @@ Run as your normal user, without `sudo`. The installer downloads the source into
 
 If you previously installed a theme hook that runs `kbd-rgb`, remove that hook to avoid duplicate updates. The watcher handles both normal theme changes and Neon Glow palette changes.
 
-### Alternative: go install
+### 2. Manual install (Go)
 
-The curl installer above sets up both the command and the automatic watcher. Use this alternative if you prefer to install the command through Go yourself.
-
-Install the command directly from GitHub (Go 1.27 or newer):
+With Go 1.27 or newer and Git installed, run these commands in order to install the command and enable automatic theme and wallpaper updates:
 
 ```sh
 mkdir -p "$HOME/.local/bin"
 GOBIN="$HOME/.local/bin" go install github.com/peterszarvas94/omarchy-kbd-rgb@latest
 mv "$HOME/.local/bin/omarchy-kbd-rgb" "$HOME/.local/bin/kbd-rgb"
-```
-
-Go names the binary after the module's final path component, so the rename keeps it compatible with the watcher. Ensure `~/.local/bin` is on your `PATH` for manual use.
-
-To enable automatic theme and wallpaper updates, also install the systemd units:
-
-```sh
 git clone https://github.com/peterszarvas94/omarchy-kbd-rgb.git
 cd omarchy-kbd-rgb
 install -Dm644 systemd/kbd-rgb.service "$HOME/.config/systemd/user/kbd-rgb.service"
@@ -53,7 +46,9 @@ systemctl --user restart kbd-rgb.path
 systemctl --user start kbd-rgb.service
 ```
 
-The uninstall instructions below apply to both installation methods. Repeat the `go install` and rename commands to update the binary.
+Go names the binary after the module's final path component, so the rename keeps it compatible with the watcher. Ensure `~/.local/bin` is on your `PATH` for manual use. Run as your normal user, without `sudo`.
+
+The uninstall instructions below apply to both installation methods. To update a manual installation, repeat the `go install` and rename commands, run `git pull` inside your existing clone, then repeat the unit installation and systemctl commands.
 
 ## Manual use
 
