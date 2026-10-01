@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch the Omarchy theme colors for keyboard RGB
+
+[Path]
+PathChanged=%h/.local/state/omarchy/current/theme/colors.toml
+PathChanged=%h/.local/state/omarchy/current/theme.name
+
+[Install]
+WantedBy=default.target

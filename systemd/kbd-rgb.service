@@ -1,0 +1,7 @@
+[Unit]
+Description=Match keyboard RGB to the Omarchy theme accent
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/sleep 0.5
+ExecStart=%h/.local/bin/kbd-rgb accent
