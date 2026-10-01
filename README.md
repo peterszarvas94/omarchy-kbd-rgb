@@ -14,7 +14,9 @@ A small Go command reads `~/.local/state/omarchy/current/theme/colors.toml` and 
 
 The original setup was tested with a Corne v4 running VIA protocol 9 and VialRGB, on both keyboard halves. Its firmware reported a maximum brightness of 50. Other firmware and devices have not been verified.
 
-## Install
+## Install or update
+
+With Go, `curl`, and `tar` installed, run:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/peterszarvas94/omarchy-kbd-rgb/master/install.sh | sh
@@ -24,7 +26,9 @@ Run as your normal user, without `sudo`. The installer downloads the source into
 
 If you previously installed a theme hook that runs `kbd-rgb`, remove that hook to avoid duplicate updates. The watcher handles both normal theme changes and Neon Glow palette changes.
 
-### Install with Go
+### Alternative: go install
+
+The curl installer above sets up both the command and the automatic watcher. Use this alternative if you prefer to install the command through Go yourself.
 
 Install the command directly from GitHub (Go 1.27 or newer):
 
