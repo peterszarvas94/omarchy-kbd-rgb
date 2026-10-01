@@ -25,6 +25,33 @@ This builds and installs `~/.local/bin/kbd-rgb`, installs the two units under `~
 
 If you previously installed a theme hook that runs `kbd-rgb`, remove that hook to avoid duplicate updates. The watcher handles both normal theme changes and Neon Glow palette changes.
 
+### Install with Go
+
+Install the command directly from GitHub (Go 1.27 or newer):
+
+```sh
+mkdir -p "$HOME/.local/bin"
+GOBIN="$HOME/.local/bin" go install github.com/peterszarvas94/omarchy-kbd-rgb@latest
+mv "$HOME/.local/bin/omarchy-kbd-rgb" "$HOME/.local/bin/kbd-rgb"
+```
+
+Go names the binary after the module's final path component, so the rename keeps it compatible with the watcher. Ensure `~/.local/bin` is on your `PATH` for manual use.
+
+To enable automatic theme and wallpaper updates, also install the systemd units:
+
+```sh
+git clone https://github.com/peterszarvas94/omarchy-kbd-rgb.git
+cd omarchy-kbd-rgb
+install -Dm644 systemd/kbd-rgb.service "$HOME/.config/systemd/user/kbd-rgb.service"
+install -Dm644 systemd/kbd-rgb.path "$HOME/.config/systemd/user/kbd-rgb.path"
+systemctl --user daemon-reload
+systemctl --user enable --now kbd-rgb.path
+systemctl --user restart kbd-rgb.path
+systemctl --user start kbd-rgb.service
+```
+
+The uninstall instructions below apply to both installation methods. Repeat the `go install` and rename commands to update the binary.
+
 ## Manual use
 
 ```sh
