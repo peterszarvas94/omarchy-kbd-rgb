@@ -16,6 +16,8 @@ The original setup was tested with a Corne v4 running VIA protocol 9 and VialRGB
 ## Install
 
 ```sh
+git clone https://github.com/peterszarvas94/omarchy-kbd-rgb.git
+cd omarchy-kbd-rgb
 ./install.sh
 ```
 
@@ -56,3 +58,7 @@ systemctl --user daemon-reload
 ```
 
 The last saved color remains on the keyboard.
+
+## License
+
+[MIT](LICENSE)
